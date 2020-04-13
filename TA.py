@@ -14,19 +14,65 @@ t_STRING = r'\"[0-9]*[a-zA-Z]+[0-9]*\"'
 t_ID = r'[0-9]*[a-zA-Z]+[0-9]*'
 t_LENGTH = r'[0-9]+'
 t_ignore = r' '
-t_READ = r'READ'
-t_BE = r'BE'
-t_WRITE = r'WRITE'
-t_WHILE = r'WHILE'
-t_ENDWHILE = r'ENDWHILE'
-t_MATRIX = r'MATRIX'
-t_CALL = r'CALL'
-t_START = r'START'
-t_FINISH = r'FINISH'
-t_RETURN = r'RETURN'
-t_ROUTINE = r'ROUTINE'
+
+def t_READ(t):
+	r'READ'
+	t.type = 'READ'
+	return t
+
+def t_BE(t):
+	r'BE'
+	t.type = 'BE'
+	return t
+
+def t_WRITE(t):
+	r'WRITE'
+	t.type = 'WRITE'
+	return t
+
+def t_WHILE(t):
+	r'WHILE'
+	t.type = 'WHILE'
+	return t
+
+def t_ENDWHILE(t):
+	r'ENDWHILE'
+	t.type = 'ENDWHILE'
+	return t
+
+def t_MATRIX(t):
+	r'MATRIX'
+	t.type = 'MATRIX'
+	return t
+
+def t_CALL(t):
+	r'CALL'
+	t.type = 'CALL'
+	return t
+
+def t_START(t):
+	r'START'
+	t.type = 'START'
+	return t
+
+def t_FINISH(t):
+	r'FINISH'
+	t.type = 'FINISH'
+	return t
+
+def t_RETURN(t):
+	r'RETURN'
+	t.type = 'RETURN'
+	return t
+
+def t_ROUTINE(t):
+	r'ROUTINE'
+	t.type = 'ROUTINE'
+	return t
+
 t_CONSTANT = r'[0-9]+'
 t_COMA = r'\,'
+
 
 def t_error(t):
 	print("Caracter no reconocido")
