@@ -14,7 +14,6 @@ t_RIGHT_PARENTESIS = r'\)'
 t_STRING = r'\"[0-9]*[a-zA-Z]+[0-9]*\"'
 t_ID = r'[0-9]*[a-zA-Z]+[0-9]*'
 
-
 def t_EQUAL(t):
     r'\='
     t.type = 'EQUAL'
@@ -25,7 +24,7 @@ def t_CONSTANT(t):
      t.type = 'CONSTANT'
      return t
 
-t_ignore = r' '
+t_ignore = ' \t'
 
 def t_READ(t):
 	r'READ'
@@ -104,35 +103,57 @@ def t_FLOAT(t):
 
 t_COMA = r'\,'
 
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
 
 def t_error(t):
-	print("Caracter no reconocido")
+    print("Error, invalid character '%s'" % t.value[0])
+    t.lexer.skip(1)
 
 def p_PROGRAMA(p):
     '''
     PROGRAMA : R START V B FINISH R
     '''
+    p[0] = "DONE"
+    symbolsTable[p[2]] = 'START'
 
 def p_V(p):
     '''
     V : BE VARIABLES SEMICOLON B V
     |
     '''
+    if len(p) > 1:
+        symbolsArray.insert(0,p[2])
 
 def p_VARIABLES(p):
     '''
     VARIABLES : FLOAT ID
-    | INT ID
-    | VECTOR ID LEFT_PARENTESIS CONSTANT RIGHT_PARENTESIS
-    | MATRIX ID LEFT_PARENTESIS CONSTANT COMA CONSTANT RIGHT_PARENTESIS
-    | CUBE ID LEFT_PARENTESIS CONSTANT COMA CONSTANT COMA CONSTANT RIGHT_PARENTESIS
+    | T ID
+    | T ID LEFT_PARENTESIS CONSTANT RIGHT_PARENTESIS
+    | T ID LEFT_PARENTESIS CONSTANT COMA CONSTANT RIGHT_PARENTESIS
+    | T ID LEFT_PARENTESIS CONSTANT COMA CONSTANT COMA CONSTANT RIGHT_PARENTESIS
     '''
+
+
+def p_T(p):
+    '''
+    T : INT
+    | VECTOR
+    | MATRIX
+    | CUBE
+    '''
+    typesArray.append(p[1])
+
 
 def p_R(p):
     '''
     R : ROUTINE LEFT_PARENTESIS ID RIGHT_PARENTESIS V B RETURN R
     |
     '''
+    if(len(p) > 1):
+        symbolsTable[p[2]] = 'ROUTINE'
 
 def p_B(p):
     '''
@@ -198,20 +219,36 @@ def p_E_AUX(p):
     '''
 
 def p_error(p):
-	print("No valido")
+	print("No valido " + str(p.lineno))
 
 
-tokens = Tokens.Tokens
-lexer = lex.lex()
-parser = yacc.yacc()
-nameOfFile = 'test.txt'
-archivo = open(nameOfFile,"r")
-test = archivo.read()
-toParse = ''
-for char in test:
-    if not(char == ' ' or char == '\t' or char == '\n' or char == '\s'):
-        toParse+=char
-archivo.close()
+try:
+    typesArray = []
+    symbolsArray = []
+    symbolsTable = {}
 
-print(toParse)
-parser.parse(toParse)
+
+    tokens = Tokens.Tokens
+    lexer = lex.lex()
+    yacc.yacc()
+    nameOfFile = 'test.txt'
+    archivo = open(nameOfFile,"r")
+    test = archivo.read()
+    archivo.close()
+
+    toParse = ''
+
+    for char in test:
+        if not(char == ' ' or char == '\t' or char == '\n' or char == '\s'):
+            toParse+=char
+    #toParse = test
+    #print(toParse)
+    print(yacc.parse(toParse,tracking = True))
+
+
+
+
+    #print(toParse)
+    #parser.parse(toParse)
+except EOFError as e:
+    print(e)
