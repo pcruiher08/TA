@@ -1,0 +1,33 @@
+PROGRAMBEGIN
+
+RUN
+
+BE contador as INT;
+BE fib as INT;
+BE aux as INT;
+BE aux2 as INT;
+
+ROUTINE calcula
+    WRITELINE(fib);
+    IF(contador < 10)
+        INCASE
+            WRITE("contador ");
+            WRITELINE(contador);
+            contador = contador + 1;
+            fib = aux;
+            aux = aux2;
+            aux2 = fib + aux;
+            CALL calcula;
+        END
+ENDROUTINE
+
+
+
+aux = 1; 
+aux2 = 1;
+fib = 1; 
+contador = 0;
+WRITELINE(fib);
+CALL calcula;
+
+PROGRAMDONE

@@ -1,0 +1,28 @@
+PROGRAMBEGIN
+RUN
+BE a[5][5] as INT;
+BE lenI as INT;
+BE lenJ as INT;
+BE var as INT;
+BE i as INT;
+BE j as INT;
+BE x as INT;
+
+ROUTINE leeArreeglo
+    FOR i=0; SCALE lenI
+        FOR j=0; SCALE lenJ
+                READ(a[i][j]);
+        ENDFOR j
+    ENDFOR i
+ENDROUTINE
+
+READ(lenI);
+READ(lenJ);
+
+CALL leeArreeglo;
+x = 0;
+
+    
+WRITE(a[x+1][x+1]);
+
+PROGRAMDONE

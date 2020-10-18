@@ -1,0 +1,72 @@
+PROGRAMBEGIN
+
+RUN
+
+BE seleccion as INT;
+BE X as INT;
+BE Y as INT;
+BE i as INT;
+BE fact as INT;
+BE res as FLOAT;
+
+ROUTINE calculaFactorial
+    res = 1;
+	FOR i=1; SCALE X
+		res = res * i;
+	ENDFOR i
+    res = res * X;
+ENDROUTINE
+
+ROUTINE calculaPotencia
+    res = X^Y;
+ENDROUTINE
+
+ROUTINE calculaPorcentaje
+    res = X*(1+Y/100);
+ENDROUTINE
+
+ROUTINE menu
+    WRITELINE("por favor ingrese un valor para el menu:");
+    WRITELINE("ingrese 1 para el calculo de factorial");
+    WRITELINE("ingrese 2 para el calculo de potencia");
+    WRITELINE("ingrese 3 para el calculo de porcentaje");
+    WRITELINE("ingrese 4 para salir");
+    WRITE("seleccion: ");
+    READ(seleccion);
+    IF(seleccion != 4)
+    INCASE
+        WRITE("X: ");
+        READ(X);
+        IF(seleccion == 1)
+        INCASE
+            CALL calculaFactorial;
+        END
+        IF(seleccion == 2)
+        INCASE
+            WRITE("Y: ");
+            READ(Y);
+            CALL calculaPotencia;
+        END
+        IF(seleccion == 3)
+        INCASE
+            WRITE("Y: ");
+            READ(Y);
+            CALL calculaPorcentaje;
+        END
+        WRITE("respuesta: ");
+        WRITELINE(res);
+    OTHERWISE
+        WRITELINE("adios");
+    END
+
+ENDROUTINE
+
+seleccion = 1;
+
+CALL menu;
+
+WHILE(seleccion != 4)
+    CALL menu;
+END
+
+PROGRAMDONE

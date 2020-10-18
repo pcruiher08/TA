@@ -1,0 +1,24 @@
+PROGRAMBEGIN
+
+RUN
+
+BE number as INT;
+BE aux as FLOAT;
+BE res as INT;
+BE stop as INT;
+
+WRITELINE("un valor por favor");
+READ(number);
+aux = number;
+
+WHILE(number > 0)
+    aux = number/10;
+    number = number/10;
+    res = (aux-number) * 10;
+    WRITE("RESPUESTA: ");
+    WRITELINE(res);
+    
+END
+
+
+PROGRAMDONE

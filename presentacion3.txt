@@ -1,0 +1,113 @@
+PROGRAMBEGIN
+RUN
+BE a[5][5] as INT;
+BE b[5][5] as INT;
+BE res[5][5] as INT;
+BE temp as INT;
+BE ax as INT;
+BE ay as INT;
+BE bx as INT;
+BE by as INT;
+
+BE i as INT;
+BE j as INT;
+BE k as INT;
+
+BE option as INT;
+
+ROUTINE input_values
+    WRITELINE("Dimension X de la matriz A");
+    READ(ax);
+    WRITELINE("Dimension Y de la matriz A");
+    READ(ay);
+    WRITELINE("Dimension X de la matriz B");
+    READ(bx);
+    WRITELINE("Dimension Y de la matriz B");
+    READ(by);
+ENDROUTINE
+
+ROUTINE read_values
+    WRITELINE("valores de la matriz A");
+    FOR i=0; SCALE ax
+        FOR j=0; SCALE ay
+            READ(a[i][j]);
+        ENDFOR j
+    ENDFOR i
+
+    WRITELINE("valores de la matriz B");
+    FOR i=0; SCALE bx
+        FOR j=0; SCALE by
+            READ(b[i][j]);
+        ENDFOR j
+    ENDFOR i
+ENDROUTINE
+
+ROUTINE add_matrix
+    FOR i=0; SCALE ax
+        FOR j=0; SCALE ay
+            res[i][j] = a[i][j] + b[i][j];
+        ENDFOR j
+    ENDFOR i
+
+    FOR i=0; SCALE ax
+	    FOR j=0; SCALE ay
+		    WRITE(res[i][j]);
+            WRITE(" ");
+	    ENDFOR j
+	    WRITELINE("");
+    ENDFOR i
+ENDROUTINE
+
+ROUTINE mult_matrix
+    FOR i=0; SCALE ax
+        FOR j=0; SCALE by
+            FOR k=0; SCALE ay
+                res[i][j] = res[i][j] + (a[i][k] * b[k][j]);
+            ENDFOR k
+        ENDFOR j
+    ENDFOR i
+
+    FOR i=0; SCALE ax
+        FOR j=0; SCALE by
+            WRITE(res[i][j]);
+            WRITE(" ");
+        ENDFOR j
+        WRITELINE("");
+    ENDFOR i
+ENDROUTINE
+
+CALL input_values;
+
+WHILE(ax >= 5 || ay >= 5 || bx >= 5 || by >= 5)
+    WRITELINE("The values exceed the limits of the matrix");
+    WRITELINE("Please insert new values");
+    CALL input_values;
+END
+
+CALL read_values;
+
+WRITELINE("que se quiere hacer con las matrices");
+WRITELINE("1 para sumarlas");
+WRITELINE("2 para multiplicarlas");
+
+READ(option);
+
+IF(option == 1) 
+INCASE
+    IF(ax == bx && ay == by) 
+    INCASE
+        CALL add_matrix;
+    OTHERWISE
+        WRITELINE("dimensiones incorrectas");
+    END
+END
+IF(option == 2) 
+INCASE
+    IF(ay == bx) 
+    INCASE
+        CALL mult_matrix;
+    OTHERWISE
+        WRITELINE("dimensiones incorrectas");
+    END
+END
+PROGRAMDONE

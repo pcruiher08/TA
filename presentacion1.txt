@@ -1,0 +1,55 @@
+PROGRAMBEGIN
+
+RUN
+
+BE a as FLOAT;
+BE b as FLOAT;
+BE c as FLOAT;
+
+BE raiz as FLOAT;
+
+BE eps as FLOAT;
+BE x as FLOAT;
+BE izquierda as FLOAT;
+BE derecha as FLOAT;
+BE centro as FLOAT;
+BE den as FLOAT;
+BE num as FLOAT;
+
+BE aux as FLOAT;
+
+ROUTINE sqrt
+    derecha = x; 
+    izquierda = 0;
+    WHILE(derecha - izquierda > eps)
+        centro = (izquierda + derecha)/2;
+        IF(centro * centro > x)
+        INCASE
+            derecha = centro;
+        OTHERWISE
+            izquierda = centro;
+        END
+    END
+    raiz = izquierda;
+ENDROUTINE
+
+ROUTINE lee
+    WRITELINE("ax2+bx+c: ");
+    READ(a);
+    READ(b);
+    READ(c);
+ENDROUTINE
+
+CALL lee;
+
+eps = 0.001;
+x = (b*b - 4*a*c);
+CALL sqrt;
+
+WRITELINE((b*(-1)+raiz)/(2*a));
+WRITELINE((b*(-1)-raiz)/(2*a));
+
+
+
+
+PROGRAMDONE

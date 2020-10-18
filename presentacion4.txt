@@ -1,0 +1,58 @@
+PROGRAMBEGIN
+
+RUN
+
+BE array[10] as INT;
+BE len as INT;
+BE i as INT;
+BE x as INT;
+BE j as INT;
+
+BE aux as INT;
+
+ROUTINE leeArray
+    WRITE("cual es la longitud del arreglo? ");
+    READ(len);
+
+    FOR i=0; SCALE len
+        WRITE("cual es el elemento "); 
+        WRITE(i); 
+        WRITE(" del arreglo? ");
+        READ(array[i]);
+    ENDFOR i
+    WRITELINE("el arreglo que ingresaste es: ");
+    FOR i=0; SCALE len
+        x = array[i];
+        WRITE(x);
+        WRITE(" ");
+      
+    ENDFOR i
+    WRITELINE(" ");
+ENDROUTINE
+
+ROUTINE sortArray
+    FOR i=0; SCALE len
+        FOR j=i; SCALE len
+            IF(array[j]<array[i])
+            INCASE
+                aux = array[i];
+                array[i] = array[j];
+                array[j] = aux;
+            END
+        ENDFOR j
+    ENDFOR i
+
+    WRITELINE("el arreglo ordenado es: ");
+    FOR i=0; SCALE len
+        x = array[i];
+        WRITE(x);
+        WRITE(" ");
+      
+    ENDFOR i
+ENDROUTINE
+
+
+CALL leeArray;
+CALL sortArray;
+
+PROGRAMDONE

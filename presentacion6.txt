@@ -1,0 +1,46 @@
+PROGRAMBEGIN
+RUN
+BE a[5][5][5][5] as INT;
+BE lenI as INT;
+BE lenJ as INT;
+BE lenK as INT;
+BE lenL as INT;
+BE i as INT;
+BE j as INT;
+BE k as INT;
+BE l as INT;
+
+ROUTINE leeArreeglo
+    FOR i=0; SCALE lenI
+        FOR j=0; SCALE lenJ
+            FOR k=0; SCALE lenK
+                FOR l=0; SCALE lenL
+                    READ(a[i][j][k][l]);
+                ENDFOR l
+            ENDFOR k
+        ENDFOR j
+    ENDFOR i
+ENDROUTINE
+
+ROUTINE imprimeArreeglo
+    FOR i=0; SCALE lenI
+        FOR j=0; SCALE lenJ
+            FOR k=0; SCALE lenK
+                    FOR l=0; SCALE lenL
+                        WRITE(a[i][j][k][l]);
+                        WRITE(" ");
+                        ENDFOR l
+            ENDFOR k
+        ENDFOR j
+    ENDFOR i
+ENDROUTINE
+
+READ(lenI);
+READ(lenJ);
+READ(lenK);
+READ(lenL);
+
+CALL leeArreeglo;
+CALL imprimeArreeglo;
+
+PROGRAMDONE
